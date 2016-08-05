@@ -31,4 +31,3 @@ clear
 
 select_source_server 
 
-##ssh rpineda.ftp@rpineda.server-dev.ixiam.lan drush @alboan.server.ixiam.lan uli | xclip -selection c
