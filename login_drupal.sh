@@ -14,14 +14,18 @@ select_source_server () {
     _SOURCE_SITES+=($i)
   done
 
-  select SOURCE_SITE in "${_SOURCE_SITES[@]}";do      
+  IFS=$'\n' sorted=($(sort <<<"${_SOURCE_SITES[*]}"))
+  sorted+=("Quit")
+
+
+  select SOURCE_SITE in "${sorted[@]}";do      
     if [ "$SOURCE_SITE" = "Quit" ]; then
       echo done
       exit
     else       		
       URL="$(ssh "${_SOURCE_SITES_ASSOCIATIVE[$SOURCE_SITE]}" drush @"$SOURCE_SITE" uli)"          
       echo "ssh "${_SOURCE_SITES_ASSOCIATIVE[$SOURCE_SITE]}" drush @"$SOURCE_SITE" uli";
-	  xdg-open "${URL}"
+	    xdg-open "${URL}"
       ssh "${_SOURCE_SITES_ASSOCIATIVE[$SOURCE_SITE]}" drush @"$SOURCE_SITE" dd | xclip -selection c;
 
 
